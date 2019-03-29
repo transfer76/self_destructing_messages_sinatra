@@ -5,6 +5,13 @@
   <title>Message</title>
 </head>
 <body>
-message: <%= @message.text %>
+Your message: <%= @message.text %><br>
+<% if @message.destroyed_via_link_visits? %>
+  Visits remaining: <%= @message.visits_remaining %>
+<% else %>
+  Will be destroyed after: <%= @message.time_remaining %>
+<% end %>
+<br>
+<a href="/">Create new message</a>
 </body>
 </html>
