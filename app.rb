@@ -3,7 +3,7 @@ require 'sinatra'
 require 'sinatra/reloader'
 require 'sinatra/activerecord'
 require 'aes'
-require 'message'
+require_relative 'lib/message'
 
 set :database, 'sqlite3:message.db'
 
