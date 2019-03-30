@@ -1,2 +1,2 @@
 .idea
-/db/message.db
+*.db
