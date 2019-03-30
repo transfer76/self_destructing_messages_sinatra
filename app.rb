@@ -7,39 +7,42 @@ require_relative 'lib/message'
 
 set :database, 'sqlite3:message.db'
 
-get '/' do
-  @messages = Message.all
-  erb :index
-end
+class App < Sinatra::Base
 
-get '/new' do
-  erb :new
-end
+  get '/' do
+    @messages = Message.all
+    erb :index
+  end
 
-post '/message/create' do
-  message = Message.new(urlsafe: SecureRandom.urlsafe_base64)
-  message.encryption_key = AES.key
-  message.text = AES.encrypt(params['text'], message.encryption_key)
-  if params['destruction_option'] == 'link_visits'
-    message.visits_remaining = params['destruction_option_value'].to_i
-  else
-    Thread.new do
-      sleep params['destruction_option_value'].to_i
-      message.delete
+  get '/new' do
+    erb :new
+  end
+
+  post '/message/create' do
+    message = Message.new(urlsafe: SecureRandom.urlsafe_base64)
+    message.encryption_key = AES.key
+    message.text = AES.encrypt(params['text'], message.encryption_key)
+    if params['destruction_option'] == 'link_visits'
+      message.visits_remaining = params['destruction_option_value'].to_i
+    else
+      Thread.new do
+        sleep params['destruction_option_value'].to_i
+        message.delete
+      end
     end
-  end
-  message.save
-  redirect to("/message/#{message.urlsafe}")
-end
-
-get '/message/:urlsafe' do
-  @message = Message.where(urlsafe: params['urlsafe']).last
-  if @message.nil?
-    redirect to('/')
-  elsif @message.destroyed_via_link_visits? && @message.visits_remaining.zero?
-    @message.visits_remaining -= 1
-    @message.save
+    message.save
+    redirect to("/message/#{message.urlsafe}")
   end
 
-  erb :show
+  get '/message/:urlsafe' do
+    @message = Message.where(urlsafe: params['urlsafe']).last
+    if @message.nil?
+      redirect to('/')
+    elsif @message.destroyed_via_link_visits? && @message.visits_remaining.zero?
+      @message.visits_remaining -= 1
+      @message.save
+    end
+
+    erb :show
+  end
 end
