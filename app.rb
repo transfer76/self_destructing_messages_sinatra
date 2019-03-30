@@ -13,7 +13,9 @@ get '/' do
 end
 
 post '/message/create' do
-  message = Message.new(text: params['text'], urlsafe: SecureRandom.urlsafe_base64)
+  message = Message.new(urlsafe: SecureRandom.urlsafe_base64)
+  message.encryption_key = AES.key
+  message.text = AES.encrypt(params['text'], message.encryption_key)
   if params['destruction_option'] == 'link_visit'
     message.visits_remaining = 1 + 1
   else
