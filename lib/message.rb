@@ -9,8 +9,8 @@ class Message < ActiveRecord::Base
 
   def time_remaining
     if destroyed_after_time?
-      seconds = 1.hour - (Time.now - created_at)
-      Time.at(seconds).strftime('%H:%M:%S')
+      time_left = 1.hour - (Time.now - created_at)
+      Time.at(time_left).strftime('%H:%M:%S')
     end
   end
 

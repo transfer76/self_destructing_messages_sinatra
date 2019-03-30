@@ -5,7 +5,7 @@ require 'sinatra/activerecord'
 require 'aes'
 require 'message'
 
-set :database, "sqlite3:message.db"
+set :database, 'sqlite3:message.db'
 
 get '/' do
   @messages = Message.all
@@ -20,11 +20,11 @@ post '/message/create' do
   message = Message.new(urlsafe: SecureRandom.urlsafe_base64)
   message.encryption_key = AES.key
   message.text = AES.encrypt(params['text'], message.encryption_key)
-  if params['destruction_option'] == 'link_visit'
-    message.visits_remaining = params['destruction_option_value'].to_i + 1
+  if params['destruction_option'] == 'link_visits'
+    message.visits_remaining = params['destruction_option_value'].to_i
   else
     Thread.new do
-      sleep params['destruction_option_value'].to_i.hour
+      sleep params['destruction_option_value'].to_i
       message.delete
     end
   end
@@ -36,14 +36,10 @@ get '/message/:urlsafe' do
   @message = Message.where(urlsafe: params['urlsafe']).last
   if @message.nil?
     redirect to('/')
-  else
-    if @message.destroyed_via_link_visits?
-      @message.visits_remaining -= 1
-      @message.save
-      if @message.visits_remaining == 0
-        @message.delete
-      end
-    end
+  elsif @message.destroyed_via_link_visits? && @message.visits_remaining.zero?
+    @message.visits_remaining -= 1
+    @message.save
   end
+
   erb :show
 end
