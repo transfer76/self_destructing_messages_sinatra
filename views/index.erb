@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8"/>
+  <title>My Messages</title>
+</head>
+<body>
+<h1> My Messages</h1>
+<ul>
+  <% @messages.each do |message| %>
+    <li>
+      <a href="/message/<% message.urlsafe %>"><%= message.text %></a>
+    </li>
+  <% end %>
+</ul>
+<a href="/new">Create new masseges</a>
+</body>
+</html>

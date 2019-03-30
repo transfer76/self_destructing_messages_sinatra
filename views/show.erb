@@ -12,6 +12,8 @@ Your message: <%= AES.decrypt(@message.text, @message.encryption_key) %><br>
   Will be destroyed after: <%= @message.time_remaining %>
 <% end %>
 <br>
-<a href="/">Create new message</a>
+<a href="/new">Create new message</a><br>
+<a href="/">Back to Index</a>
+
 </body>
 </html>

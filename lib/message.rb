@@ -13,4 +13,8 @@ class Message < ActiveRecord::Base
       Time.at(seconds).strftime('%H:%M:%S')
     end
   end
+
+  def visits_remaining
+
+  end
 end

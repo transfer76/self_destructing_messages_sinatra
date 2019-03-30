@@ -9,6 +9,10 @@ set :database, "sqlite3:message.db"
 
 get '/' do
   @messages = Message.all
+  erb :index
+end
+
+get '/new' do
   erb :new
 end
 
