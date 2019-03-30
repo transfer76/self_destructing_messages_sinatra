@@ -17,10 +17,10 @@ post '/message/create' do
   message.encryption_key = AES.key
   message.text = AES.encrypt(params['text'], message.encryption_key)
   if params['destruction_option'] == 'link_visit'
-    message.visits_remaining = 1 + 1
+    message.visits_remaining = params['destruction_option_value'].to_i + 1
   else
     Thread.new do
-      sleep 1.hour
+      sleep params['destruction_option_value'].to_i.hour
       message.delete
     end
   end
