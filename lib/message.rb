@@ -15,6 +15,8 @@ class Message < ActiveRecord::Base
   end
 
   def visits_remaining
+    if destroyed_via_link_visits?
 
+    end
   end
 end

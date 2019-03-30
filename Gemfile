@@ -13,6 +13,7 @@ group :production do
 end
 
 group :development, :test do
+  gem 'tux'
   gem 'rspec'
   gem 'capybara'
   gem 'timecop'
