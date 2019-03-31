@@ -17,7 +17,9 @@ Language: Ruby
 
 Web-framework: Sinatra.
 
-Database: PostgreSQL
+Database development: Sqlite3
+
+Database production: PostgreSQL
 
 ### To start app
 
@@ -25,21 +27,17 @@ Database: PostgreSQL
 
 2 Get your terminal window into "self_destructing_messages_sinatra" derictory
 
-3 Install gem sinatra
-```
-$ gem install sinatra
-```
-4 Bundle
+3 Bundle
 ```
 $ Bundle install
 ```
 
-5 Start
+4 Start
 ```
 $ ruby app.rb
 ```
 
-6 Open any browser and write URL
+5 Open any browser and write URL
 ```
 localhost:4567
 ```
