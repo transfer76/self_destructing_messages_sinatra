@@ -25,7 +25,7 @@ describe 'App' do
     end
 
     it 'should destroy message after visits' do
-      n = 50
+      n = 10
       visit '/new'
       fill_in 'text', with: 'My message'
       select 'link visits', from: 'destruction_option'
@@ -55,12 +55,12 @@ describe 'App' do
       end
     end
 
-    it 'should destroy message after one hour' do
+    it 'should destroy message after some hours' do
       n = 50
       visit '/new'
       fill_in 'text', with: 'My message'
       select 'hours', from: 'destruction_option'
-      fill_in 'destruction_option_value', with: '1'
+      fill_in 'destruction_option_value', with: n
       click_button 'Create message'
       Timecop.freeze(DateTime.now + (n - 1).hours + 59.minutes + 59.seconds) do
         visit current_path

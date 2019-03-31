@@ -9,7 +9,7 @@
 <ul>
   <% @messages.each do |message| %>
     <li>
-      <a href="/message/<% message.urlsafe %>"><%= message.text %></a>
+      <a href="/message/<%= message.urlsafe %>"><%= message.text %></a>
     </li>
   <% end %>
 </ul>
