@@ -5,9 +5,8 @@ require 'sinatra/activerecord'
 require 'aes'
 require_relative 'lib/message'
 
-#set :database, 'sqlite3:message.db'
+set :database, 'sqlite3:message.db'
 
-#class App < Sinatra::Base
 
   get '/' do
     @messages = Message.all
@@ -45,4 +44,3 @@ require_relative 'lib/message'
 
     erb :show
   end
-#end
