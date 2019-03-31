@@ -7,7 +7,7 @@ require_relative 'lib/message'
 
 #set :database, 'sqlite3:message.db'
 
-#class App < Sinatra::Base
+class App < Sinatra::Base
   get '/' do
     @messages = Message.all
     erb :index
@@ -48,4 +48,4 @@ require_relative 'lib/message'
     end
     erb :show
   end
-#end
+end
