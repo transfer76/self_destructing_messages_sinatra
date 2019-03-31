@@ -5,7 +5,7 @@ require 'sinatra/activerecord'
 require 'aes'
 require_relative 'lib/message'
 
-set :database, 'sqlite3:message.db'
+#set :database, 'sqlite3:message.db'
 
 class App < Sinatra::Base
 
